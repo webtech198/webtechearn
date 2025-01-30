@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <title></title>
+    <style>
+        body {
+            margin: 20px;
+        }
+        .popup-container {
+            display: none;
+            position: absolute;
+            top: 5px;
+            width: 85%;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            z-index: 10;
+        }
+        .bank-option {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+        .bank-option img {
+            width: 35px;
+            height: 35px;
+            border-radius: 3px;
+            margin-right: 10px;
+        }
+        #bank-img {
+            display: inline-block;
+            clip-path: circle();
+            width: 45px;
+            height: 45px;
+            vertical-align: middle;
+            margin-top: 10px;
+        }
+      body {
+    background: #121212;
+    font-family: 'Poppins', sans-serif;
+  }
+  {
+    margin: 0 auto;
+  }
+  .container {
+    width: 100%;
+    border-top: 0.9px solid #242426;
+  }
+  input {
+    background: #242426;
+  }
+    input {
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  
+   label {
+    display: block;
+    margin-bottom: 5px;
+    color: #FFFFFF;
+    font-size: 14px;
+  }
+  
+   input {
+    width: 100%;
+    border: none;
+    color: #68686A;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    height: 53px;
+    border-radius: 3px;
+    margin-bottom: 6px;
+    padding-left: 21px;
+  }
+  .con {
+    width: 100%;
+  }
+  button {
+    background: #28153F;
+    width: 100%;
+    border: none;
+    color: #8F8D8E;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    height: 53px;
+    border-radius: 3px;
+    margin-bottom: 6px;
+    font-weight: bold;
+    padding-left: 21px;
+    margin-top: 18px;
+    margin-bottom: 27px;
+  }
+  button:hover {
+    background: #40196C;
+    color: #fff;
+  }
+  .popup-con {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 78%;
+    background-color: #CCCCCC;
+    border: none;
+    padding: 10px;
+    z-index: 10;
+    border-radius: 12px;
+    transform: translate(-50%, -50%);
+    height: fit-content;
+    align-items: center;
+    border: none;
+  }
+    </style>
+      <script>
+        function showPopup() {
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        function selectBankOption(bankName, bankImgSrc) {
+            document.getElementById('bank-name').value = bankName;
+            document.getElementById('bank-img').src = bankImgSrc;
+            document.getElementById('bank-img').style.display = 'inline-block';
+            closePopup();
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+
+            var accountName = document.getElementById('account-name').value;
+            var accountNumber = document.getElementById('account-number').value;
+            var amount = document.getElementById('amount').value;
+
+            if (amount > 50000) {
+                showErrorPopup();
+                return;
+            }
+
+            var bankName = document.getElementById('bank-name').value;
+            var bankImgSrc = document.getElementById('bank-img').src;
+
+            var nextPageUrl = `confirm.html?accountName=${encodeURIComponent(accountName)}&accountNumber=${encodeURIComponent(accountNumber)}&amount=${encodeURIComponent(amount)}&bankName=${encodeURIComponent(bankName)}&bankImgSrc=${encodeURIComponent(bankImgSrc)}`;
+            window.location.href = nextPageUrl;
+        }
+
+        function showErrorPopup() {
+            document.getElementById('error-popup').style.display = 'block';
+        }
+
+        function closeErrorPopup() {
+            document.getElementById('error-popup').style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+
+    <h3 style="color: #fff;">Withdraw To Bank</h3>
+    <center>
+<div class="container">
+  <div>
+    <br>
+<img src="bkn.jpeg" alt="bkn.jpeg" style="width: 70px; border-radius: 8px; margin-bottom: 0px;"> 
+<h4 style="color: #fff; font-size: 14px;">Recipient Details</h4>
+<br>
+</div>
+</center>
+    <form onsubmit="submitForm(event);">
+        <label for="account-name">Enter Account Name:</label>
+        <input type="text" id="account-name" required>
+        
+        <label for="account-number">Enter Account Number:</label>
+<input 
+    type="tel" 
+    id="account-number" 
+    pattern="\d{10}" 
+    maxlength="10" 
+    oninput="this.setCustomValidity('')" 
+    oninvalid="this.setCustomValidity('Please enter a 10-digit account number')" 
+    required>
+        
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" required>
+
+        <label for="bank">Select Bank:</label>
+        <div style="position: relative;">
+            <input type="text" id="bank-name" onclick="showPopup()" readonly placeholder="Select your bank">
+            <img id="bank-img" src="" alt="" style="display: none;">
+        </div>
+        <div id="popup" class="popup-container">
+            <span class="close-btn" onclick="closePopup()" style="float: right; font-weight: bold; font-size: 24px;">X</span>
+            <div class="bank-option" onclick="selectBankOption('Access Bank', 'acce.jpeg')">
+            <img src="acce.jpeg" alt="Access Bank" style="border: 1px solid #121212; clip-path: circle();">
+                          Access Bank
+                        </div>
+  
+              <div class="bank-option" onclick="selectBankOption('First Bank', 'f.png')">
+                <img src="f.png" alt="f.png">
+                First Bank
+              </div>
+
+            <div class="bank-option" onclick="selectBankOption('Keystone Bank', 'key.jpeg')">
+              <img src="key.jpeg" alt="Keystone Bank">
+              Keystone Bank
+            </div>
+
+            <div class="bank-option" onclick="selectBankOption('OPay', 'opay.jpeg')">
+              <img src="opay.jpeg" alt="OPay">
+              OPay
+            </div>
+  
+            <div class="bank-option" onclick="selectBankOption('GTBank PLC', 'gt.jpeg')">
+              <img src="gt.jpeg" alt="GTBank PLC">
+              GTBank PLC
+            </div>
+  
+            <div class="bank-option" onclick="selectBankOption('Paga', 'paga.png')">
+              <img src="paga.png" alt="paga.png">
+              Paga
+            </div>
+
+              <div class="bank-option" onclick="selectBankOption('Kuda', 'kuda.jpeg')">
+              <img src="kuda.jpeg" alt="Kuda">
+              Kuda
+            </div>
+
+
+            <div class="bank-option" onclick="selectBankOption('PalmPay', 'p.png')">
+              <img src="p.png" alt="PalmPay">
+              PalmPay
+            </div>
+            
+            <div class="bank-option" onclick="selectBankOption('MoniePoint', 'm.jpeg')">
+              <img src="m.jpeg" alt="MoniePoint" style="border-radius: 2px;">
+              MoniePoint
+            </div>
+
+            <div class="bank-option" onclick="selectBankOption('Ecobank Nigeria', 'eco.png')">
+              <img src="eco.png" alt="eco.png">
+              Ecobank Nigeria
+            </div>
+
+            <div class="bank-option" onclick="selectBankOption('United Bank For Africa(UBA)', 'uba.jpeg')">
+              <img src="uba.jpeg" alt="United Bank For Africa(UBA)">
+              United Bank For Africa(UBA)
+            </div>
+
+            <div class="bank-option" onclick="selectBankOption('First Bank', 'po.jpeg')">
+              <img src="po.jpeg" alt="Polaris Bank">
+              Polaris Bank
+            </div>
+          
+                  
+            <div class="bank-option" onclick="selectBankOption('Wema Bank', 'w.png')">
+                <img src="w.png" alt="Wema Bank">
+                Wema Bank
+            </div>
+            <div class="bank-option" onclick="selectBankOption('Union Bank of Nogeria', 'u.png')">
+                <img src="u.png" alt="Union Bank of Nigeria">
+                Union Bank of Nigeria
+            </div>
+            <div class="bank-option" onclick="selectBankOption('Zenith Bank', 'ze.png')">
+                <img src="ze.png" alt="Zenith Bank">
+                Zenith Bank
+            </div>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="error-popup" class="popup-con" style="display: none;">
+      <center>
+        <img src="err.png" alt="err.png" style="width: 49px;">
+        <br>
+        <strong>Processing Error</strong>
+        <p>You have Insufficient Funds to process this transaction</p>
+               <button class="close-btn" onclick="closeErrorPopup()" style="width: 65%; height: 46px; margin-bottom: 12px; margin-top: 0;">Ok</button>
+
+    </div>
+
+</body>
+</html>

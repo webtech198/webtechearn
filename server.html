@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            color: #00FF00;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .terminal {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            box-sizing: border-box;
+            color: #00FF00;
+            max-width: 800px;
+            margin: 50px auto;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        .input-line {
+            display: flex;
+        }
+        .prompt {
+            margin-right: 10px;
+        }
+        .input-text {
+            flex-grow: 1;
+            border: none;
+            background-color: transparent;
+            color: #00FF00;
+            font-size: 1em;
+        }
+        .input-text:focus {
+            outline: none;
+        }
+        .output {
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+        .matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background-color: #000;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+        }
+        .blinking-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+            animation: blink 1s step-start infinite;
+        }
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+        .typewriter {
+            font-size: 1.2em;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 0.15em solid #00FF00;
+            animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #00FF00; }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix"></div>
+
+    <div class="terminal">
+        <div class="input-line">
+            <span class="prompt">user@localhost:~$</span>
+        </div>
+        <div class="output">
+            <p>Welcome to the hacker environment!</p>
+            <p id="typewriter-text" class="typewriter"></p>
+            <p class="blinking-text">Server is active</p>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        document.querySelector('.matrix').appendChild(canvas);
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const columns = Math.floor(canvas.width / 20);
+        const drops = Array(columns).fill(0);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00FF00';
+            ctx.font = '20px Courier New';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = String.fromCharCode(Math.random() * 128);
+                ctx.fillText(text, i * 20, drops[i] * 20);
+
+                if (drops[i] * 20 > canvas.height && Math.random() > 0.95) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 33);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drops.fill(0);
+        });
+
+
+        const typewriterText = "Go ahead and make transactions...";
+        let index = 0;
+        let direction = 1;
+        let delay = 100;
+
+        function type() {
+            if (direction === 1) {
+                if (index < typewriterText.length) {
+                    document.getElementById('typewriter-text').textContent += typewriterText[index];
+                    index++;
+                } else {
+                    direction = -1;
+                    delay = 1000;
+                }
+            } else {
+                if (index > 0) {
+                    document.getElementById('typewriter-text').textContent = typewriterText.slice(0, index - 1);
+                    index--;
+                } else {
+                    direction = 1;
+                }
+            }
+            setTimeout(type, delay);
+            delay = 100;
+        }
+
+        setTimeout(type, 1000);
+    </script>
+</body>
+</html>

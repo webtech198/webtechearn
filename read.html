@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+    <title></title>
+    <style>
+        body {
+          margin: 0 auto;
+          font-family: 'Poppins', sans-serif;
+          background-color: #121212;
+          color: #fff;
+        }
+
+        .container {
+            width: 85%;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+        }
+
+        .item {
+            margin-bottom: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .question {
+            background-color: #f9a825;
+            color: white;
+            padding: 15px;
+            margin: 0;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+            user-select: none;
+        }
+
+        .answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            color: #68686A;
+            background-color: #f6f6f6;
+            border-radius: 7px;
+            padding: 0px 1px;
+        }
+
+        .answer.open {
+            max-height: 60px;
+            padding: 15px;
+            padding-bottom: 60px;
+        }
+        p {
+          padding-bottom: 60px;
+        }
+    </style>
+</head>
+<body>
+<br>
+    <div class="container">
+      <h2 style="color: #7F8082; font-size: 17px;">What people often ask about this app</h2>
+        <div class="item">
+            <h3 class="question">Is Earn Free Paying?</h3>
+            <div class="answer">
+                <p>Yes, Earn free is 100% real and paying .</p>
+            </div>
+        </div>
+<br>
+        <div class="item">
+            <h3 class="question">What happen if my payment is not confirmed?</h3>
+            <div class="answer">
+                <p>Do well to contact out customer servive, in case issues like this occurs</p>
+            </div>
+            </div>
+<br>
+        <div class="item">
+          <h3 class="question">Is it possible to take free loan on Earn Free</h3>
+          <div class="answer">
+            <p>Yes, you will be given a free loan option where you can take multiple loans weekly without any paper work, trace or payback.</p>
+      </div>
+      </div>
+      <br>
+        <div class="item">
+            <h3 class="question">Is the 50,000 my only money on Earn Free</h3>
+            <div class="answer">
+                <p>No, the earn free will give you more accessibily to play hundreds of games and win more cash prizes, immediatly you activate your account your unlock all feature of earn free.</p>
+                </div>
+        </div>
+        <br>
+          <div class="item">
+          <h3 class="question">How can i active my account</h3>
+         <div class="answer">
+          <p>Earnfree has a payment checkout make your payments to the earn free app.</p>
+                  </div>
+                  </div>
+  <br>      
+                  <div class="item">
+          <h3 class="question">Can i save on Earn Free</h3>
+         <div class="answer">
+          <p>Yes, you can definetly save your hacked funds on Earn Free, you can fix a date for your withdrawal.</p>
+                  </div>
+                  </div>
+                  <br>
+        <div class="item">
+          <h3 class="question">Is Earn Free an hacked app</h3>
+          <div class="answer">
+            <p>Yes, EarnFree is an hacked app, from the Dark Web, Developed by HyperTech Group of hackers.</p>
+          </div>
+        </div>
+         <br>
+         <div class="item">
+           <h3 class="question">Is the payment a one time payment?</h3>
+           <div class="answer">
+             <p>Yes, The payments you are paying to the earn free is a one time payment, after paying you will not be asked for any other fees.</p>
+           </div>
+         </div> 
+    </div>
+
+    <script>
+        document.querySelectorAll('.question').forEach(item => {
+            item.addEventListener('click', () => {
+                const answer = item.nextElementSibling;
+                answer.classList.toggle('open');
+            });
+        });
+    </script>
+
+</body>
+</html>

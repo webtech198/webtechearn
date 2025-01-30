@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <title></title>
+    <style>
+        body {
+            margin: 0 auto;
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #fff;
+        }
+        img {
+            width: 75px;
+            height: 75px;
+            border-radius: 8px;
+            margin-top: 9px;
+        }
+        .container {
+            width: 100%;
+            height: 280px;
+            background: #222222;
+        }
+        span {
+            color: #3A5782;
+        }
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        p {
+            margin: 0;
+            padding: 0;
+            padding-left: 11px;
+            font-size: 15px;
+        }
+    button {
+    background: #28153F;
+    width: 100%;
+    border: none;
+    color: #8F8D8E;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    height: 53px;
+    border-radius:3px;
+    font-weight: bold;
+    padding-left: 21px;
+    margin-top: 18px;
+    margin-bottom: 27px;
+  }
+  button:hover {
+    background: #40196C;
+    color: #fff;
+  }
+          .popup-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s;
+        }
+        .popup-content {
+            background: #222;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 280px;
+            color: #fff;
+        }
+        .popup-content button {
+            background: #40196C;
+            margin-top: 15px;
+        }
+        .popup-container.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+    </style>
+    <script>
+function getQueryParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    accountName: params.get('accountName'),
+    accountNumber: params.get('accountNumber'),
+    amount: params.get('amount'),
+    bankName: params.get('bankName'),
+    bankImgSrc: params.get('bankImgSrc')
+  };
+}
+
+function formatAmount(amount) {
+  return Number(amount).toLocaleString();
+}
+
+function displayDetails() {
+  const details = getQueryParams();
+  const formattedAmount = formatAmount(details.amount);
+  document.getElementById('account-name').textContent = details.accountName;
+  document.getElementById('account-number').textContent = details.accountNumber;
+  document.getElementById('amount').textContent = formattedAmount;
+  document.getElementById('bank-name').textContent = details.bankName;
+  document.getElementById('bank-img').src = details.bankImgSrc;
+}
+
+function updateDate() {
+  const today = new Date();
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const formattedDate = today.toLocaleDateString('en-US', options);
+  document.getElementById('date').innerText = formattedDate;
+}
+
+function showPopup() {
+  document.getElementById('popup-container').classList.add('show');
+}
+
+function redirectToSecondPage() {
+  window.location.href = 'pay.html';
+}
+
+window.onload = function() {
+  displayDetails();
+  updateDate();
+};
+
+setInterval(updateDate, 86400000);
+            </script>
+</head>
+<body>
+<center>
+        <img id="bank-img" src="" alt="Bank Logo">
+        <br>
+        <span style="color: #fff;">Transfer</span>
+        <br>
+        <span style="font-weight: bold; font-size: 24px; color: #fff;">-₦<span id="amount" style="font-weight: bold; font-size: 24px; color: #fff;"></span></span>
+     </center>  
+     <div class="container clearfix">
+      <br>
+        <p style="float: left;">Account Name:</p> 
+        <span id="account-name" style="float: right; padding-right: 12px; font-size: 16px; font-weight: bold;"></span>
+    <br> <hr style="margin-top: 15px; margin-bottom: 15px; width: 94%; color: #343434;">
+     
+        <p style="float: left;">Account Number:</p> 
+        <span id="account-number" style="float: right; padding-right: 11px; font-size: 16px; font-weight: bold;"></span>
+        <br>
+         <hr style="margin-top: 15px; margin-bottom: 15px; width: 94%; color: #343434;">
+        <p style="float: left;">Bank Name:</p> 
+        <span id="bank-name" style="float: right; padding-right: 12px; font-size: 16px; font-weight: bold;"></span>
+        <br>
+         <hr style="margin-top: 15px; margin-bottom: 15px; width: 94%; color: #343434;">
+        <p style="float: left;">Today's date is </p>
+        <span id="date" style="float: right; padding-right: 12px; font-size: 16px; font-weight: bold;"></span>
+        <br>
+    </div>
+    <br><br><br>
+        <button onclick="showPopup()">Withdraw</button>
+
+    <div id="popup-container" class="popup-container">
+        <div class="popup-content">
+            <h3>Withdrawal Placed</h3>
+            <p>You will be paying ₦6,000.00 as Network fee to approve this transaction!</p>
+            <button onclick="redirectToSecondPage()">Yes, proceed</button>
+            <a href="cryp.html" style="color: #000;">Pay via Crypto</a>
+        </div>
+    </div>
+
+</body>
+</html>
